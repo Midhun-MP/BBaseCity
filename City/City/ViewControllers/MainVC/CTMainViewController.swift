@@ -12,7 +12,9 @@ import UIKit
 // MARK:- IBOutlets & Properties
 class CTMainViewController: UIViewController
 {
-
+    // City List Tableview
+    @IBOutlet weak var tblCityList: UITableView!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()

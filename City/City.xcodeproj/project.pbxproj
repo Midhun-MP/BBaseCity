@@ -15,6 +15,8 @@
 		D94963E021523D1B0064D4D6 /* CityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963DF21523D1B0064D4D6 /* CityTests.swift */; };
 		D94963EE21523E9C0064D4D6 /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = D94963ED21523E9C0064D4D6 /* cities.json */; };
 		D94963EF21523E9C0064D4D6 /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = D94963ED21523E9C0064D4D6 /* cities.json */; };
+		D94963F3215241850064D4D6 /* CTCity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963F2215241850064D4D6 /* CTCity.swift */; };
+		D94963F4215241850064D4D6 /* CTCity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963F2215241850064D4D6 /* CTCity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +41,7 @@
 		D94963DF21523D1B0064D4D6 /* CityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityTests.swift; sourceTree = "<group>"; };
 		D94963E121523D1B0064D4D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D94963ED21523E9C0064D4D6 /* cities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
+		D94963F2215241850064D4D6 /* CTCity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +83,7 @@
 		D94963C921523D190064D4D6 /* City */ = {
 			isa = PBXGroup;
 			children = (
+				D94963F1215241630064D4D6 /* Models */,
 				D94963EC21523E2E0064D4D6 /* SupportingFiles */,
 				D94963EB21523D6B0064D4D6 /* ViewControllers */,
 				D94963EA21523D600064D4D6 /* AppDelegate */,
@@ -111,7 +115,7 @@
 		D94963EB21523D6B0064D4D6 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				D94963CC21523D190064D4D6 /* CTMainViewController.swift */,
+				D94963F0215241040064D4D6 /* MainVC */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -122,6 +126,22 @@
 				D94963ED21523E9C0064D4D6 /* cities.json */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		D94963F0215241040064D4D6 /* MainVC */ = {
+			isa = PBXGroup;
+			children = (
+				D94963CC21523D190064D4D6 /* CTMainViewController.swift */,
+			);
+			path = MainVC;
+			sourceTree = "<group>";
+		};
+		D94963F1215241630064D4D6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D94963F2215241850064D4D6 /* CTCity.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,6 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D94963CD21523D190064D4D6 /* CTMainViewController.swift in Sources */,
+				D94963F3215241850064D4D6 /* CTCity.swift in Sources */,
 				D94963CB21523D190064D4D6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D94963E021523D1B0064D4D6 /* CityTests.swift in Sources */,
+				D94963F4215241850064D4D6 /* CTCity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
