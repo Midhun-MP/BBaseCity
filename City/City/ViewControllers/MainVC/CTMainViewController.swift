@@ -81,14 +81,16 @@ extension CTMainViewController
     {
         let view = self.showLoading()
         DispatchQueue.global().async {
-            var cities       = CTUtility.loadCityFromJSONFile(fileName: CTConstants.fileName)
-            self.cityDetails = [String: [CTCity]]()
-            cities           = self.sortCity(cities: cities)
-            configureDataModel(cities: cities)
+            var cities         = CTUtility.loadCityFromJSONFile(fileName: CTConstants.fileName)
+            self.cityDetails   = [String: [CTCity]]()
+            self.sectionTitles = [String]()
+            cities             = self.sortCity(cities: cities)
+            self.configureDataModel(cities: cities)
             DispatchQueue.main.async {
                 self.hideLoading(viewLoading: view)
                 self.tblCityList.dataSource = self
                 self.tblCityList.delegate   = self
+                self.tblCityList.reloadData()
             }
         }
     }

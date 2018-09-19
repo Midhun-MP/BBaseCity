@@ -9,18 +9,72 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Raleway-SemiBold_0.ttf">
+            <string>Raleway-SemiBold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--City-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="City" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="CTMainViewController" customModule="City" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="82" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3RZ-i1-cyy">
+                                <rect key="frame" x="0.0" y="32" width="375" height="603"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="separatorInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CityCell" rowHeight="82" id="5Tv-EA-3nt" customClass="CTCityTableViewCell" customModule="City" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="82"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5Tv-EA-3nt" id="IV8-1w-rJr">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="81.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_place_24px" translatesAutoresizingMaskIntoConstraints="NO" id="DXH-gR-qUx">
+                                                    <rect key="frame" x="15" y="31" width="15" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="15" id="Ppg-NT-Xsi"/>
+                                                        <constraint firstAttribute="height" constant="20" id="s3p-sx-5UF"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Midhun MP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1j-Af-7RX">
+                                                    <rect key="frame" x="40" y="27" width="325" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="28" id="QJL-aw-sux"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Raleway-SemiBold" family="Raleway" pointSize="17"/>
+                                                    <color key="textColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="DXH-gR-qUx" firstAttribute="leading" secondItem="IV8-1w-rJr" secondAttribute="leading" constant="15" id="A64-eN-38I"/>
+                                                <constraint firstItem="b1j-Af-7RX" firstAttribute="leading" secondItem="DXH-gR-qUx" secondAttribute="trailing" constant="10" id="K0T-Up-zbm"/>
+                                                <constraint firstItem="b1j-Af-7RX" firstAttribute="centerY" secondItem="IV8-1w-rJr" secondAttribute="centerY" id="Oms-Ka-cxZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="b1j-Af-7RX" secondAttribute="trailing" constant="10" id="b4D-Df-ALJ"/>
+                                                <constraint firstItem="DXH-gR-qUx" firstAttribute="centerY" secondItem="IV8-1w-rJr" secondAttribute="centerY" id="dNs-5t-cZ5"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="lblCityDetail" destination="b1j-Af-7RX" id="UFQ-N5-0GT"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="City" id="PDe-yh-GPj"/>
+                    <connections>
+                        <outlet property="tblCityList" destination="3RZ-i1-cyy" id="J3f-tF-TCC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -52,4 +106,7 @@
             <point key="canvasLocation" x="78" y="134"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ic_place_24px" width="31" height="44"/>
+    </resources>
 </document>
