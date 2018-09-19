@@ -10,7 +10,7 @@
 import UIKit
 
 // MARK:- City
-struct CTCity
+struct CTCity: Codable
 {
     // MARK: Properties
     // Id

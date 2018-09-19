@@ -17,6 +17,8 @@
 		D94963EF21523E9C0064D4D6 /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = D94963ED21523E9C0064D4D6 /* cities.json */; };
 		D94963F3215241850064D4D6 /* CTCity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963F2215241850064D4D6 /* CTCity.swift */; };
 		D94963F4215241850064D4D6 /* CTCity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963F2215241850064D4D6 /* CTCity.swift */; };
+		D94963F72152457E0064D4D6 /* CTUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963F62152457E0064D4D6 /* CTUtility.swift */; };
+		D94963F82152457E0064D4D6 /* CTUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963F62152457E0064D4D6 /* CTUtility.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +44,7 @@
 		D94963E121523D1B0064D4D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D94963ED21523E9C0064D4D6 /* cities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
 		D94963F2215241850064D4D6 /* CTCity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCity.swift; sourceTree = "<group>"; };
+		D94963F62152457E0064D4D6 /* CTUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTUtility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +86,7 @@
 		D94963C921523D190064D4D6 /* City */ = {
 			isa = PBXGroup;
 			children = (
+				D94963F52152456B0064D4D6 /* Utility */,
 				D94963F1215241630064D4D6 /* Models */,
 				D94963EC21523E2E0064D4D6 /* SupportingFiles */,
 				D94963EB21523D6B0064D4D6 /* ViewControllers */,
@@ -142,6 +146,14 @@
 				D94963F2215241850064D4D6 /* CTCity.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		D94963F52152456B0064D4D6 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				D94963F62152457E0064D4D6 /* CTUtility.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D94963CD21523D190064D4D6 /* CTMainViewController.swift in Sources */,
+				D94963F72152457E0064D4D6 /* CTUtility.swift in Sources */,
 				D94963F3215241850064D4D6 /* CTCity.swift in Sources */,
 				D94963CB21523D190064D4D6 /* AppDelegate.swift in Sources */,
 			);
@@ -258,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D94963F82152457E0064D4D6 /* CTUtility.swift in Sources */,
 				D94963E021523D1B0064D4D6 /* CityTests.swift in Sources */,
 				D94963F4215241850064D4D6 /* CTCity.swift in Sources */,
 			);
