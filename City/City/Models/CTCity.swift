@@ -35,6 +35,18 @@ struct CTCity: Codable
     }
 }
 
+// MARK: CTCity Utility
+extension CTCity
+{
+    /// City details
+    ///
+    /// - Returns: City details in the form City Name, Country
+    func getCityDetail() -> String
+    {
+        return "\(self.name), \(self.country)"
+    }
+}
+
 // MARK:- City Coordinates
 struct CTCoordinate: Codable
 {

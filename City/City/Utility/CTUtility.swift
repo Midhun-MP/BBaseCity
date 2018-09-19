@@ -37,7 +37,7 @@ struct CTUtility
         // City Data from file
         var fileData: Data?
         
-        if let fileURL = Bundle.main.url(forResource: fileName, withExtension: "json")
+        if let fileURL = Bundle.main.url(forResource: fileName, withExtension: CTConstants.fileExt)
         {
             // Reading data back
             do

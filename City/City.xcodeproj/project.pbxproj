@@ -19,6 +19,12 @@
 		D94963F4215241850064D4D6 /* CTCity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963F2215241850064D4D6 /* CTCity.swift */; };
 		D94963F72152457E0064D4D6 /* CTUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963F62152457E0064D4D6 /* CTUtility.swift */; };
 		D94963F82152457E0064D4D6 /* CTUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963F62152457E0064D4D6 /* CTUtility.swift */; };
+		D94963FB21524E830064D4D6 /* UIViewController+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963FA21524E830064D4D6 /* UIViewController+Utility.swift */; };
+		D94963FC21524E830064D4D6 /* UIViewController+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963FA21524E830064D4D6 /* UIViewController+Utility.swift */; };
+		D94963FE2152503C0064D4D6 /* CTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963FD2152503C0064D4D6 /* CTConstants.swift */; };
+		D94963FF2152503C0064D4D6 /* CTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963FD2152503C0064D4D6 /* CTConstants.swift */; };
+		D9496403215252970064D4D6 /* CTCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9496402215252970064D4D6 /* CTCityTableViewCell.swift */; };
+		D9496404215252970064D4D6 /* CTCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9496402215252970064D4D6 /* CTCityTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +51,9 @@
 		D94963ED21523E9C0064D4D6 /* cities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
 		D94963F2215241850064D4D6 /* CTCity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCity.swift; sourceTree = "<group>"; };
 		D94963F62152457E0064D4D6 /* CTUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTUtility.swift; sourceTree = "<group>"; };
+		D94963FA21524E830064D4D6 /* UIViewController+Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utility.swift"; sourceTree = "<group>"; };
+		D94963FD2152503C0064D4D6 /* CTConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTConstants.swift; sourceTree = "<group>"; };
+		D9496402215252970064D4D6 /* CTCityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCityTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +95,8 @@
 		D94963C921523D190064D4D6 /* City */ = {
 			isa = PBXGroup;
 			children = (
+				D9496400215250410064D4D6 /* Constants */,
+				D94963F921524E690064D4D6 /* Extensions */,
 				D94963F52152456B0064D4D6 /* Utility */,
 				D94963F1215241630064D4D6 /* Models */,
 				D94963EC21523E2E0064D4D6 /* SupportingFiles */,
@@ -135,6 +146,7 @@
 		D94963F0215241040064D4D6 /* MainVC */ = {
 			isa = PBXGroup;
 			children = (
+				D9496401215252720064D4D6 /* CityCell */,
 				D94963CC21523D190064D4D6 /* CTMainViewController.swift */,
 			);
 			path = MainVC;
@@ -154,6 +166,31 @@
 				D94963F62152457E0064D4D6 /* CTUtility.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		D94963F921524E690064D4D6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D94963FA21524E830064D4D6 /* UIViewController+Utility.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D9496400215250410064D4D6 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				D94963FD2152503C0064D4D6 /* CTConstants.swift */,
+			);
+			name = Constants;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		D9496401215252720064D4D6 /* CityCell */ = {
+			isa = PBXGroup;
+			children = (
+				D9496402215252970064D4D6 /* CTCityTableViewCell.swift */,
+			);
+			path = CityCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,6 +301,9 @@
 				D94963F72152457E0064D4D6 /* CTUtility.swift in Sources */,
 				D94963F3215241850064D4D6 /* CTCity.swift in Sources */,
 				D94963CB21523D190064D4D6 /* AppDelegate.swift in Sources */,
+				D9496403215252970064D4D6 /* CTCityTableViewCell.swift in Sources */,
+				D94963FE2152503C0064D4D6 /* CTConstants.swift in Sources */,
+				D94963FB21524E830064D4D6 /* UIViewController+Utility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,9 +311,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D94963FF2152503C0064D4D6 /* CTConstants.swift in Sources */,
 				D94963F82152457E0064D4D6 /* CTUtility.swift in Sources */,
+				D94963FC21524E830064D4D6 /* UIViewController+Utility.swift in Sources */,
 				D94963E021523D1B0064D4D6 /* CityTests.swift in Sources */,
 				D94963F4215241850064D4D6 /* CTCity.swift in Sources */,
+				D9496404215252970064D4D6 /* CTCityTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
