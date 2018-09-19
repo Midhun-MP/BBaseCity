@@ -21,10 +21,18 @@ class CTMainViewController: UIViewController
     // Section Titles
     fileprivate var sectionTitles: [String]?
     
+    // Filtered result
+    var filteredCities: [CTCity]?
+    
+    // Search Controller
+    let searchController = UISearchController(searchResultsController: nil)
+    
+    // View Did Load
     override func viewDidLoad()
     {
         super.viewDidLoad()
         loadCityDetails()
+        configureSearchBar()
     }
 
 }
@@ -37,10 +45,22 @@ extension CTMainViewController: UITableViewDataSource, UITableViewDelegate
     func numberOfSections(in tableView: UITableView) -> Int
     {
         var numOfSections: Int = 0
-        if (sectionTitles?.count ?? 0) > 0
+        
+        // Finding the section count
+        if isFiltering()
+        {
+            numOfSections = filteredCities?.count ?? 0
+        }
+        else
+        {
+            numOfSections = sectionTitles?.count ?? 0
+        }
+        
+        // If section count is greater, hiding the no data background
+        // Else adding the no data background
+        if numOfSections > 0
         {
             tableView.separatorStyle = .singleLine
-            numOfSections            = (sectionTitles?.count ?? 0)
             tableView.backgroundView = nil
         }
         else
@@ -58,7 +78,15 @@ extension CTMainViewController: UITableViewDataSource, UITableViewDelegate
     // No.of Rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        let cities = cityDetails![sectionTitles![section]]
+        var cities: [CTCity]?
+        if isFiltering()
+        {
+            cities = filteredCities
+        }
+        else
+        {
+            cities = cityDetails![sectionTitles![section]]
+        }
         return cities?.count ?? 0
     }
     
@@ -66,10 +94,71 @@ extension CTMainViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: CTConstants.cellIdentifier) as! CTCityTableViewCell
-        let city                = cityDetails![sectionTitles![indexPath.section]]![indexPath.row]
+        
+        var city: CTCity
+        if isFiltering()
+        {
+            city = filteredCities![indexPath.row]
+        }
+        else
+        {
+            city = cityDetails![sectionTitles![indexPath.section]]![indexPath.row]
+        }
         cell.lblCityDetail.text = "\(city.name), \(city.country)"
         return cell
     }
+}
+
+
+// MARK: - UISearchResultsUpdating
+extension CTMainViewController: UISearchResultsUpdating
+{
+    // MARK:- UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController)
+    {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    func searchBarIsEmpty() -> Bool
+    {
+        // Returns true if the text is empty or nil
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All")
+    {
+        let firstCharacter = searchText.first ?? Character(" ")
+        let firstLetter    = String(firstCharacter).uppercased()
+        let cities         = cityDetails![firstLetter]
+        filteredCities = cities?.filter { (city) -> Bool in
+            city.getCityDetail().lowercased().hasPrefix(searchText.lowercased())
+        }
+        tblCityList.reloadData()
+    }
+}
+
+// MARK:- Utility
+extension CTMainViewController
+{
+    
+    /// Configures the search bar
+    func configureSearchBar()
+    {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Cities"
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
+    }
+    
+    
+    // Search is active or not
+    func isFiltering() -> Bool
+    {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+    
 }
 
 // MARK:- Data Loading
@@ -118,7 +207,7 @@ extension CTMainViewController
             if let firstCharacter = city.name.first
             {
                 // Creating the index title
-                let firstLetter  = String(firstCharacter)
+                let firstLetter  = String(firstCharacter).uppercased()
                 
                 // Storing city in corresponding section
                 var cityArray = self.cityDetails![firstLetter] ?? [CTCity]()
