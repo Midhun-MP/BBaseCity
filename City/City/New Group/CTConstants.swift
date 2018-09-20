@@ -12,11 +12,14 @@ import UIKit
 struct CTConstants
 {
     // File Name
-    static let fileName       = "cities"
+    static let fileName        = "cities_test"
     
     // File Extension
-    static let fileExt        = "json"
+    static let fileExt         = "json"
     
     // Cell Identifier
-    static let cellIdentifier = "CityCell"
+    static let cellIdentifier  = "CityCell"
+    
+    // Go to detail page segue
+    static let goToDetailSegue = "showDetails"
 }

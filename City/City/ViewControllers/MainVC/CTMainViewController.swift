@@ -16,10 +16,13 @@ class CTMainViewController: UIViewController
     @IBOutlet weak var tblCityList: UITableView!
     
     // City details
-    var cityDetails: [String: [CTCity]]?
+    private var cityDetails: [String: [CTCity]]?
     
     // Section Titles
-    fileprivate var sectionTitles: [String]?
+    private var sectionTitles: [String]?
+    
+    // Selected City
+    private var selectedCity: CTCity!
     
     // Filtered result
     var filteredCities: [CTCity]?
@@ -33,6 +36,16 @@ class CTMainViewController: UIViewController
         super.viewDidLoad()
         loadCityDetails()
         configureSearchBar()
+    }
+    
+    // Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.identifier == CTConstants.goToDetailSegue
+        {
+            let destination   = segue.destination as? CTDetailViewController
+            destination?.city = selectedCity
+        }
     }
 
 }
@@ -107,6 +120,21 @@ extension CTMainViewController: UITableViewDataSource, UITableViewDelegate
         cell.lblCityDetail.text = "\(city.name), \(city.country)"
         return cell
     }
+    
+    // Selection
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        if isFiltering()
+        {
+            selectedCity = filteredCities![indexPath.row]
+        }
+        else
+        {
+            let cities   = cityDetails![sectionTitles![indexPath.section]]
+            selectedCity = cities![indexPath.row]
+        }
+        self.performSegue(withIdentifier: CTConstants.goToDetailSegue, sender: nil)
+    }
 }
 
 
@@ -125,12 +153,16 @@ extension CTMainViewController: UISearchResultsUpdating
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
-    func filterContentForSearchText(_ searchText: String, scope: String = "All")
+    
+    /// Data filtering function
+    ///
+    /// - Parameter searchText: String need to be searched
+    func filterContentForSearchText(_ searchText: String)
     {
         let firstCharacter = searchText.first ?? Character(" ")
         let firstLetter    = String(firstCharacter).uppercased()
         let cities         = cityDetails![firstLetter]
-        filteredCities = cities?.filter { (city) -> Bool in
+        filteredCities     = cities?.filter { (city) -> Bool in
             city.getCityDetail().lowercased().hasPrefix(searchText.lowercased())
         }
         tblCityList.reloadData()

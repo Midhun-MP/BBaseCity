@@ -23,7 +23,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="82" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3RZ-i1-cyy">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="82" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3RZ-i1-cyy">
                                 <rect key="frame" x="0.0" y="32" width="375" height="603"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -74,11 +74,41 @@
                     <navigationItem key="navigationItem" title="City" id="PDe-yh-GPj"/>
                     <connections>
                         <outlet property="tblCityList" destination="3RZ-i1-cyy" id="J3f-tF-TCC"/>
+                        <segue destination="Xh6-Tc-eN4" kind="show" identifier="showDetails" id="mlu-vw-2iD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="876" y="134"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="Ie2-RO-WwC">
+            <objects>
+                <viewController id="Xh6-Tc-eN4" customClass="CTDetailViewController" customModule="City" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aW3-dx-sin">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="aFc-3e-8ok">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="aFc-3e-8ok" firstAttribute="top" secondItem="AXL-h6-VS7" secondAttribute="top" id="1R3-EM-9QY"/>
+                            <constraint firstItem="AXL-h6-VS7" firstAttribute="bottom" secondItem="aFc-3e-8ok" secondAttribute="bottom" id="Q7I-Kt-oFk"/>
+                            <constraint firstItem="aFc-3e-8ok" firstAttribute="leading" secondItem="AXL-h6-VS7" secondAttribute="leading" id="oPB-lk-pq3"/>
+                            <constraint firstItem="AXL-h6-VS7" firstAttribute="trailing" secondItem="aFc-3e-8ok" secondAttribute="trailing" id="uhW-iU-6UT"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="AXL-h6-VS7"/>
+                    </view>
+                    <connections>
+                        <outlet property="mkMapView" destination="aFc-3e-8ok" id="hDO-Db-8Gi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5dg-xi-0ZY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1631" y="133"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qOe-3g-gp3">
@@ -88,11 +118,14 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Vc3-6S-BBJ">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.4549019608" green="0.33725490200000002" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="tintColor" red="0.4549019608" green="0.33725490200000002" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" red="0.4549019608" green="0.33725490200000002" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="23"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                     </navigationBar>

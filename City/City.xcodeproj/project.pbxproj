@@ -25,6 +25,8 @@
 		D94963FF2152503C0064D4D6 /* CTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94963FD2152503C0064D4D6 /* CTConstants.swift */; };
 		D9496403215252970064D4D6 /* CTCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9496402215252970064D4D6 /* CTCityTableViewCell.swift */; };
 		D9496404215252970064D4D6 /* CTCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9496402215252970064D4D6 /* CTCityTableViewCell.swift */; };
+		D99E53E621536C2000AAF752 /* CTDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99E53E521536C2000AAF752 /* CTDetailViewController.swift */; };
+		D99E53E82153730300AAF752 /* cities_test.json in Resources */ = {isa = PBXBuildFile; fileRef = D99E53E72153730300AAF752 /* cities_test.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,8 @@
 		D94963FA21524E830064D4D6 /* UIViewController+Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utility.swift"; sourceTree = "<group>"; };
 		D94963FD2152503C0064D4D6 /* CTConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTConstants.swift; sourceTree = "<group>"; };
 		D9496402215252970064D4D6 /* CTCityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCityTableViewCell.swift; sourceTree = "<group>"; };
+		D99E53E521536C2000AAF752 /* CTDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTDetailViewController.swift; sourceTree = "<group>"; };
+		D99E53E72153730300AAF752 /* cities_test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities_test.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +134,7 @@
 		D94963EB21523D6B0064D4D6 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				D99E53E421536BD700AAF752 /* DetailVC */,
 				D94963F0215241040064D4D6 /* MainVC */,
 			);
 			path = ViewControllers;
@@ -138,6 +143,7 @@
 		D94963EC21523E2E0064D4D6 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				D99E53E72153730300AAF752 /* cities_test.json */,
 				D94963ED21523E9C0064D4D6 /* cities.json */,
 			);
 			path = SupportingFiles;
@@ -191,6 +197,14 @@
 				D9496402215252970064D4D6 /* CTCityTableViewCell.swift */,
 			);
 			path = CityCell;
+			sourceTree = "<group>";
+		};
+		D99E53E421536BD700AAF752 /* DetailVC */ = {
+			isa = PBXGroup;
+			children = (
+				D99E53E521536C2000AAF752 /* CTDetailViewController.swift */,
+			);
+			path = DetailVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,6 +292,7 @@
 				D94963EE21523E9C0064D4D6 /* cities.json in Resources */,
 				D94963D521523D1B0064D4D6 /* LaunchScreen.storyboard in Resources */,
 				D94963D221523D1B0064D4D6 /* Assets.xcassets in Resources */,
+				D99E53E82153730300AAF752 /* cities_test.json in Resources */,
 				D94963D021523D190064D4D6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,6 +312,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D99E53E621536C2000AAF752 /* CTDetailViewController.swift in Sources */,
 				D94963CD21523D190064D4D6 /* CTMainViewController.swift in Sources */,
 				D94963F72152457E0064D4D6 /* CTUtility.swift in Sources */,
 				D94963F3215241850064D4D6 /* CTCity.swift in Sources */,
