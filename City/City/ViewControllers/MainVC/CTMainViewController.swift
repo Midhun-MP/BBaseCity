@@ -31,6 +31,16 @@ class CTMainViewController: UIViewController
     let searchController = UISearchController(searchResultsController: nil)
     
     var dateForLog:Date!
+    
+    // City Info
+    var cityData: [CTCity]?
+    
+    // Search timer to handle fast typing
+    var searchTimer: Timer!
+    
+    // Stores previous search text length (For incremental search)
+    var previousSearchTextLength = 0
+    
     // View Did Load
     override func viewDidLoad()
     {
@@ -67,13 +77,14 @@ extension CTMainViewController: UITableViewDataSource, UITableViewDelegate
         }
         else
         {
-            numOfSections = sectionTitles?.count ?? 0
+            numOfSections = cityData?.count ?? 0
         }
         
         // If section count is greater, hiding the no data background
         // Else adding the no data background
         if numOfSections > 0
         {
+            numOfSections = 1
             tableView.separatorStyle = .singleLine
             tableView.backgroundView = nil
         }
@@ -99,7 +110,7 @@ extension CTMainViewController: UITableViewDataSource, UITableViewDelegate
         }
         else
         {
-            cities = cityDetails![sectionTitles![section]]
+            cities = cityData
         }
         return cities?.count ?? 0
     }
@@ -116,7 +127,7 @@ extension CTMainViewController: UITableViewDataSource, UITableViewDelegate
         }
         else
         {
-            city = cityDetails![sectionTitles![indexPath.section]]![indexPath.row]
+            city = cityData![indexPath.row]
         }
         cell.lblCityDetail.text = "\(city.name), \(city.country)"
         return cell
@@ -145,11 +156,19 @@ extension CTMainViewController: UISearchResultsUpdating, UISearchControllerDeleg
     // MARK:- UISearchResultsUpdating Delegate
     func updateSearchResults(for searchController: UISearchController)
     {
-        tblCityList.dataSource = nil
-        tblCityList.delegate   = nil
-        filterContentForSearchText(searchController.searchBar.text!)
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(filterContentForSearchText(_:)), object: nil)
-        self.performSelector(inBackground: #selector(filterContentForSearchText(_:)), with: searchController.searchBar.text!)
+        if searchController.searchBar.text!.count > 0
+        {
+            tblCityList.dataSource = nil
+            tblCityList.delegate   = nil
+            if searchTimer != nil && searchTimer.isValid
+            {
+                searchTimer.invalidate()
+            }
+            
+            searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
+                self.filterContentForSearchText(searchController.searchBar.text!)
+            })
+        }
     }
     
     // Search Cancel
@@ -172,15 +191,19 @@ extension CTMainViewController: UISearchResultsUpdating, UISearchControllerDeleg
     @objc func filterContentForSearchText(_ searchText: String)
     {
         DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
-            let firstCharacter  = searchText.first ?? Character(" ")
-            let firstLetter     = String(firstCharacter).uppercased()
-            var cities          = self.cityDetails![firstLetter]
-            if searchText.count > 1
+            if self.previousSearchTextLength == 0 || self.previousSearchTextLength >= searchText.count
             {
-                cities          = cities?.filter { (city) -> Bool in city.getCityDetail().lowercased().hasPrefix(searchText.lowercased())
+                let cities          = self.cityData?.filter { (city) -> Bool in city.getCityDetail().lowercased().hasPrefix(searchText.lowercased())
                 }
+                self.filteredCities = cities
             }
-            self.filteredCities = cities
+            else
+            {
+                self.filteredCities = self.filteredCities?.filter({ (city) -> Bool in city.getCityDetail().lowercased().hasPrefix(searchText.lowercased())
+                })
+            }
+            self.previousSearchTextLength = searchText.count
+            
             DispatchQueue.main.async {
                 print(self.filteredCities?.count ?? 0)
                 self.tblCityList.dataSource = self
@@ -229,16 +252,17 @@ extension CTMainViewController
         let view = self.showLoading()
         DispatchQueue.global().async {
             var cities         = CTUtility.loadCityFromJSONFile(fileName: CTConstants.fileName)
-            print(Date().offsetFrom(date: self.dateForLog))
+            print("For reading \(Date().offsetFrom(date: self.dateForLog))")
             self.dateForLog = Date()
             self.cityDetails   = [String: [CTCity]]()
             self.sectionTitles = [String]()
-            cities             = self.sortCity(cities: cities)
-            print(Date().offsetFrom(date: self.dateForLog))
-            self.dateForLog = Date()
-            self.configureDataModel(cities: cities)
-            print(Date().offsetFrom(date: self.dateForLog))
-            self.dateForLog = Date()
+            //cities             = self.sortCity(cities: cities)
+            self.cityData      = self.sortCity(cities: cities)
+            print("For Sorting \(Date().offsetFrom(date: self.dateForLog))")
+//            self.dateForLog = Date()
+//            self.configureDataModel(cities: cities)
+//            print("For Data Model \(Date().offsetFrom(date: self.dateForLog))")
+//            self.dateForLog = Date()
             DispatchQueue.main.async {
                 self.hideLoading(viewLoading: view)
                 self.tblCityList.dataSource = self
