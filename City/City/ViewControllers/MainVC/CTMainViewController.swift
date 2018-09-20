@@ -30,6 +30,7 @@ class CTMainViewController: UIViewController
     // Search Controller
     let searchController = UISearchController(searchResultsController: nil)
     
+    var dateForLog:Date!
     // View Did Load
     override func viewDidLoad()
     {
@@ -139,12 +140,23 @@ extension CTMainViewController: UITableViewDataSource, UITableViewDelegate
 
 
 // MARK: - UISearchResultsUpdating
-extension CTMainViewController: UISearchResultsUpdating
+extension CTMainViewController: UISearchResultsUpdating, UISearchControllerDelegate
 {
     // MARK:- UISearchResultsUpdating Delegate
     func updateSearchResults(for searchController: UISearchController)
     {
+        tblCityList.dataSource = nil
+        tblCityList.delegate   = nil
         filterContentForSearchText(searchController.searchBar.text!)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(filterContentForSearchText(_:)), object: nil)
+        self.performSelector(inBackground: #selector(filterContentForSearchText(_:)), with: searchController.searchBar.text!)
+    }
+    
+    // Search Cancel
+    func didDismissSearchController(_ searchController: UISearchController)
+    {
+        tblCityList.dataSource = self
+        tblCityList.delegate   = self
     }
     
     func searchBarIsEmpty() -> Bool
@@ -157,15 +169,26 @@ extension CTMainViewController: UISearchResultsUpdating
     /// Data filtering function
     ///
     /// - Parameter searchText: String need to be searched
-    func filterContentForSearchText(_ searchText: String)
+    @objc func filterContentForSearchText(_ searchText: String)
     {
-        let firstCharacter = searchText.first ?? Character(" ")
-        let firstLetter    = String(firstCharacter).uppercased()
-        let cities         = cityDetails![firstLetter]
-        filteredCities     = cities?.filter { (city) -> Bool in
-            city.getCityDetail().lowercased().hasPrefix(searchText.lowercased())
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+            let firstCharacter  = searchText.first ?? Character(" ")
+            let firstLetter     = String(firstCharacter).uppercased()
+            var cities          = self.cityDetails![firstLetter]
+            if searchText.count > 1
+            {
+                cities          = cities?.filter { (city) -> Bool in city.getCityDetail().lowercased().hasPrefix(searchText.lowercased())
+                }
+            }
+            self.filteredCities = cities
+            DispatchQueue.main.async {
+                print(self.filteredCities?.count ?? 0)
+                self.tblCityList.dataSource = self
+                self.tblCityList.delegate   = self
+                self.tblCityList.reloadData()
+            }
         }
-        tblCityList.reloadData()
+        
     }
 }
 
@@ -202,13 +225,20 @@ extension CTMainViewController
     /// Loads the city details
     func loadCityDetails()
     {
+        dateForLog = Date()
         let view = self.showLoading()
         DispatchQueue.global().async {
             var cities         = CTUtility.loadCityFromJSONFile(fileName: CTConstants.fileName)
+            print(Date().offsetFrom(date: self.dateForLog))
+            self.dateForLog = Date()
             self.cityDetails   = [String: [CTCity]]()
             self.sectionTitles = [String]()
             cities             = self.sortCity(cities: cities)
+            print(Date().offsetFrom(date: self.dateForLog))
+            self.dateForLog = Date()
             self.configureDataModel(cities: cities)
+            print(Date().offsetFrom(date: self.dateForLog))
+            self.dateForLog = Date()
             DispatchQueue.main.async {
                 self.hideLoading(viewLoading: view)
                 self.tblCityList.dataSource = self
@@ -259,3 +289,23 @@ extension CTMainViewController
     
 }
 
+extension Date {
+    
+    func offsetFrom(date : Date) -> String {
+        
+        let dayHourMinuteSecond: Set<Calendar.Component> = [.day, .hour, .minute, .second]
+        let difference = NSCalendar.current.dateComponents(dayHourMinuteSecond, from: date, to: self);
+        
+        let seconds = "\(difference.second ?? 0)s"
+        let minutes = "\(difference.minute ?? 0)m" + " " + seconds
+        let hours = "\(difference.hour ?? 0)h" + " " + minutes
+        let days = "\(difference.day ?? 0)d" + " " + hours
+        
+        if let day = difference.day, day          > 0 { return days }
+        if let hour = difference.hour, hour       > 0 { return hours }
+        if let minute = difference.minute, minute > 0 { return minutes }
+        if let second = difference.second, second > 0 { return seconds }
+        return ""
+    }
+    
+}

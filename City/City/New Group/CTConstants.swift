@@ -12,7 +12,7 @@ import UIKit
 struct CTConstants
 {
     // File Name
-    static let fileName        = "cities_test"
+    static let fileName        = "cities"
     
     // File Extension
     static let fileExt         = "json"
