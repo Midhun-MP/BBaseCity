@@ -33,4 +33,11 @@ class CityTests: XCTestCase {
         }
     }
     
+    // Loads Correct City Data
+    func testLoadCityData()
+    {
+        // Loading Correct data
+        XCTAssertTrue(!CTUtility.loadCityFromJSONFile(fileName: CTConstants.fileName).isEmpty)
+    }
+    
 }
