@@ -176,12 +176,14 @@ extension CTMainViewController
     /// Configures the search bar
     func configureSearchBar()
     {
-        searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Cities"
-        navigationItem.searchController = searchController
+        searchController.searchResultsUpdater      = self
+        searchController.searchBar.placeholder     = "Search Cities"
+        searchController.searchBar.tintColor       = UIColor.white
+        searchController.searchBar.barStyle        = .black
+        navigationItem.searchController            = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        definesPresentationContext = true
+        definesPresentationContext                 = true
     }
     
     
