@@ -16,7 +16,7 @@ class CTMainViewController: UIViewController
     @IBOutlet weak var tblCityList: UITableView!
     
     // City details
-    private var cityDetails: [String: [CTCity]]?
+    private var cityDetails: [CTCity]?
     
     // Section Titles
     private var sectionTitles: [String]?
@@ -29,11 +29,6 @@ class CTMainViewController: UIViewController
     
     // Search Controller
     let searchController = UISearchController(searchResultsController: nil)
-    
-    var dateForLog:Date!
-    
-    // City Info
-    var cityData: [CTCity]?
     
     // Search timer to handle fast typing
     var searchTimer: Timer!
@@ -77,7 +72,7 @@ extension CTMainViewController: UITableViewDataSource, UITableViewDelegate
         }
         else
         {
-            numOfSections = cityData?.count ?? 0
+            numOfSections = cityDetails?.count ?? 0
         }
         
         // If section count is greater, hiding the no data background
@@ -110,7 +105,7 @@ extension CTMainViewController: UITableViewDataSource, UITableViewDelegate
         }
         else
         {
-            cities = cityData
+            cities = cityDetails
         }
         return cities?.count ?? 0
     }
@@ -127,7 +122,7 @@ extension CTMainViewController: UITableViewDataSource, UITableViewDelegate
         }
         else
         {
-            city = cityData![indexPath.row]
+            city = cityDetails![indexPath.row]
         }
         cell.lblCityDetail.text = "\(city.name), \(city.country)"
         return cell
@@ -142,8 +137,7 @@ extension CTMainViewController: UITableViewDataSource, UITableViewDelegate
         }
         else
         {
-            let cities   = cityDetails![sectionTitles![indexPath.section]]
-            selectedCity = cities![indexPath.row]
+            selectedCity   = cityDetails![indexPath.row]
         }
         self.performSegue(withIdentifier: CTConstants.goToDetailSegue, sender: nil)
     }
@@ -176,8 +170,10 @@ extension CTMainViewController: UISearchResultsUpdating, UISearchControllerDeleg
     {
         tblCityList.dataSource = self
         tblCityList.delegate   = self
+        tblCityList.reloadData()
     }
     
+    // Search Bar empty check
     func searchBarIsEmpty() -> Bool
     {
         // Returns true if the text is empty or nil
@@ -191,9 +187,12 @@ extension CTMainViewController: UISearchResultsUpdating, UISearchControllerDeleg
     @objc func filterContentForSearchText(_ searchText: String)
     {
         DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
+            
+            // If previous search is there, using it's output
+            // Else starting a fresh search
             if self.previousSearchTextLength == 0 || self.previousSearchTextLength >= searchText.count
             {
-                let cities          = self.cityData?.filter { (city) -> Bool in city.getCityDetail().lowercased().hasPrefix(searchText.lowercased())
+                let cities          = self.cityDetails?.filter { (city) -> Bool in city.getCityDetail().lowercased().hasPrefix(searchText.lowercased())
                 }
                 self.filteredCities = cities
             }
@@ -204,6 +203,7 @@ extension CTMainViewController: UISearchResultsUpdating, UISearchControllerDeleg
             }
             self.previousSearchTextLength = searchText.count
             
+            // Updating UI
             DispatchQueue.main.async {
                 print(self.filteredCities?.count ?? 0)
                 self.tblCityList.dataSource = self
@@ -248,21 +248,10 @@ extension CTMainViewController
     /// Loads the city details
     func loadCityDetails()
     {
-        dateForLog = Date()
         let view = self.showLoading()
         DispatchQueue.global().async {
-            var cities         = CTUtility.loadCityFromJSONFile(fileName: CTConstants.fileName)
-            print("For reading \(Date().offsetFrom(date: self.dateForLog))")
-            self.dateForLog = Date()
-            self.cityDetails   = [String: [CTCity]]()
-            self.sectionTitles = [String]()
-            //cities             = self.sortCity(cities: cities)
-            self.cityData      = self.sortCity(cities: cities)
-            print("For Sorting \(Date().offsetFrom(date: self.dateForLog))")
-//            self.dateForLog = Date()
-//            self.configureDataModel(cities: cities)
-//            print("For Data Model \(Date().offsetFrom(date: self.dateForLog))")
-//            self.dateForLog = Date()
+            let cities         = CTUtility.loadCityFromJSONFile(fileName: CTConstants.fileName)
+            self.cityDetails   = self.sortCity(cities: cities)
             DispatchQueue.main.async {
                 self.hideLoading(viewLoading: view)
                 self.tblCityList.dataSource = self
@@ -283,53 +272,4 @@ extension CTMainViewController
             first.getCityDetail() < second.getCityDetail()
         })
     }
-    
-    
-    /// Configures the data model
-    ///
-    /// - Parameter cities: Cities List
-    private func configureDataModel(cities: [CTCity])
-    {
-        for city in cities
-        {
-            if let firstCharacter = city.name.first
-            {
-                // Creating the index title
-                let firstLetter  = String(firstCharacter).uppercased()
-                
-                // Storing city in corresponding section
-                var cityArray = self.cityDetails![firstLetter] ?? [CTCity]()
-                cityArray.append(city)
-                self.cityDetails![firstLetter] = cityArray
-                
-                // Storing the section title
-                if !self.sectionTitles!.contains(firstLetter)
-                {
-                    self.sectionTitles?.append(firstLetter)
-                }
-            }
-        }
-    }
-    
-}
-
-extension Date {
-    
-    func offsetFrom(date : Date) -> String {
-        
-        let dayHourMinuteSecond: Set<Calendar.Component> = [.day, .hour, .minute, .second]
-        let difference = NSCalendar.current.dateComponents(dayHourMinuteSecond, from: date, to: self);
-        
-        let seconds = "\(difference.second ?? 0)s"
-        let minutes = "\(difference.minute ?? 0)m" + " " + seconds
-        let hours = "\(difference.hour ?? 0)h" + " " + minutes
-        let days = "\(difference.day ?? 0)d" + " " + hours
-        
-        if let day = difference.day, day          > 0 { return days }
-        if let hour = difference.hour, hour       > 0 { return hours }
-        if let minute = difference.minute, minute > 0 { return minutes }
-        if let second = difference.second, second > 0 { return seconds }
-        return ""
-    }
-    
 }
